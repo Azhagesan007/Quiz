@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Quiz</title>
+</head>
+<body style="background: url('/static/back.jpg')">
+<div style="text-align: center; width: auto; height: auto; margin-left: 300px; margin-right: 300px">
+{% for i in q %}
+    <h1>{{ i }}</h1>
+{% endfor%}
+
+    <div id="timer">Timer: <span id="countdown">30</span> seconds</div>
+    <form action="/answer" method="post" id="quizForm">
+        {% for option in question.options %}
+            <input type="radio" name="option" value="{{ option }}"> {{ option }}<br>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+    <script>
+        var timer = document.getElementById('countdown');
+        var timeLeft = parseInt(timer.textContent);
+
+
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                document.getElementById('quizForm').submit();
+            } else {
+                timer.textContent = timeLeft;
+                timeLeft--;
+            }
+        }
+
+
+        var countdownTimer = setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
